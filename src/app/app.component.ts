@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'my-app',
   template: `
-    <h1>Hello AoT</h1>
+    <a [routerLink]="['lazy']">Lazy root</a>
+    <router-outlet></router-outlet>
   `
 })
 export class AppComponent { }

@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const AotPlugin = require('@ngtools/webpack').AotPlugin;
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = (env = {}) => {
 
@@ -18,6 +19,9 @@ module.exports = (env = {}) => {
       rules: []
     },
     devtool: '#source-map',
+    plugins: [
+      new CopyWebpackPlugin([{ from: './src/index.html' }])
+    ]
   };
 
 
@@ -26,7 +30,7 @@ module.exports = (env = {}) => {
     config.module.rules.push(
       { test: /\.ts$/, loaders: ['@ngtools/webpack'] }
     );
-    config.plugins = [
+    config.plugins = config.plugins.concat([
       new AotPlugin({
         tsConfigPath: './tsconfig.json',
         entryModule: 'src/app/app.module#AppModule'
@@ -38,13 +42,13 @@ module.exports = (env = {}) => {
         },
         comments: false,
         sourceMap: true
-      }),
-    ];
+      })
+    ]);
 
   } else {
 
     config.module.rules.push(
-      { test: /\.ts$/, loaders: ['awesome-typescript-loader'] }
+      { test: /\.ts$/, loaders: ['awesome-typescript-loader', 'angular2-router-loader'] }
     );
 
   }
